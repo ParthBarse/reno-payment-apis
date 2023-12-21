@@ -90,6 +90,26 @@ def payment_request():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+@app.route('/paymentStatus', methods=['GET'])
+def get_payment_status():
+    try:
+        # Get request id from frontend
+        request_id = request.args.get('request_id')
+
+        # Call the payment status API
+        payment_status_url = f"https://api.sandbox.hit-pay.com/v1/payment-requests/{request_id}"
+        payment_status_headers = {
+            "X-BUSINESS-API-KEY": "dbabbd41e53aac95b5d6833e975fd2945f77e168450d70910d0248a0ccb83c1c"
+        }
+
+        payment_status_response = requests.get(payment_status_url, headers=payment_status_headers)
+        payment_status_data = payment_status_response.json()
+
+        return jsonify({'id':request_id,'status':payment_status_data['status']})
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
     app.run()
