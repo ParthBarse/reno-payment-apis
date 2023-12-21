@@ -48,7 +48,7 @@ def home():
 # ------------------------------------------------------------------------------------------------------------
 
 import requests
-@app.route('/payment-request', methods=['POST'])
+@app.route('/payment-requests', methods=['POST'])
 def payment_request():
     try:
         # Receive data from frontend
