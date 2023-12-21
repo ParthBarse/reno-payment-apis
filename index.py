@@ -61,7 +61,7 @@ def payment_request():
         first_api_url = "https://api.sandbox.hit-pay.com/v1/payment-requests"
         first_api_payload = payment_data
         first_api_headers = {
-            "X-BUSINESS-API-KEY": "385943a292ce5704be5cea46f5a5948e5cc6b5cb7a60c26a3c9148710270afb9",
+            "X-BUSINESS-API-KEY": "dbabbd41e53aac95b5d6833e975fd2945f77e168450d70910d0248a0ccb83c1c",
             "Content-Type": "application/json"
         }
 
@@ -75,7 +75,7 @@ def payment_request():
         # Call the second API with the received request id
         second_api_url = f"https://api.sandbox.hit-pay.com/v1/payment-requests/{request_id}"
         second_api_headers = {
-            "X-BUSINESS-API-KEY": "385943a292ce5704be5cea46f5a5948e5cc6b5cb7a60c26a3c9148710270afb9"
+            "X-BUSINESS-API-KEY": "dbabbd41e53aac95b5d6833e975fd2945f77e168450d70910d0248a0ccb83c1c"
         }
 
         second_api_response = requests.get(second_api_url, headers=second_api_headers)
@@ -84,9 +84,6 @@ def payment_request():
         # Get the URL from the second API response
         url = second_api_data.get("url")
         order_data['payment_url'] = url
-
-        orders_db_crm = db['orders_db_crm']
-        orders_db_crm.insert_one(order_data)
 
         # Return id and url
         return jsonify({"id": request_id, "url": url})
